@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Distances between two places App</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="bootstrap.min.css" rel="stylesheet"/>
+        <link rel="preconnect" href="http://fonts.gstatic.com">
+        <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet"/>
+
+    </head>
+
+    <body>
+        <div class="jumbotron">
+            <div class="container-fluid">
+                <button type="button" onclick="getlocation();">
+                    Current Position
+                   </button><br><br>
+                   <div id="googleMap1"
+                    style="width: 100px; height: 100px"></div>
+                   <script src=
+                   "https://maps.google.com/maps/api/js?sensor=false">
+                   </script>
+                   <script type="text/javascript">
+                    function getlocation() {
+                    if (navigator.geolocation) {
+                     navigator.geolocation.getCurrentPosition(showLoc, errHand);
+                    }
+                    }
+                    function showLoc(pos) {
+                    latt = pos.coords.latitude;
+                    long = pos.coords.longitude;
+                    var lattlong = new google.maps.LatLng(latt, long);
+                    var OPTions = {
+                     center: lattlong,
+                     zoom: 10,
+                     mapTypeControl: true,
+                     navigationControlOptions: {
+                     style: google.maps.NavigationControlStyle.SMALL,
+                     },
+                    };
+                    var mapg = new google.maps.Map(
+                     document.getElementById("googleMap1"),
+                     OPTions
+                    );
+                    var markerg = new google.maps.Marker({
+                     position: lattlong,
+                     map: mapg,
+                     title: "You are here!",
+                    });
+                    }
+                    function errHand(err) {
+                    switch (err.code) {
+                     case err.PERMISSION_DENIED:
+                     result.innerHTML =
+                      "The application doesn't have the permission" +
+                      "to make use of location services";
+                     break;
+                     case err.POSITION_UNAVAILABLE:
+                     result.innerHTML = "The location of the device is uncertain";
+                     break;
+                     case err.TIMEOUT:
+                     result.innerHTML = "The request to get user location timed out";
+                     break;
+                     case err.UNKNOWN_ERROR:
+                     result.innerHTML =
+                      "Time to fetch location information exceeded" +
+                      "the maximum timeout interval";
+                     break;
+                    }
+                    }
+                   </script>
+            </div>
+            <div class="container-fluid">
+                <h1>Distances between two places</h1>
+                <p>This part will help calculate the distance between two places.</p>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="from" class="col-xs-2 control-label"><i class="far fa-dot-circle"></i></label>
+                        <div class="col-xs-4">
+                            <input type="text" id="from" placeholder="Origin" class="form-control">
+                        </div>
+                   </div>
+                   <div class="form-group">
+                    
+                        <label for="to" class="col-xs-2 control-label"><i class="fas fa-map-marker-alt"></i></label>
+                        <div class="col-xs-4">
+                            <input type="text" id="to" placeholder="Destination" class="form-control">
+                        </div>
+                      
+                     </div>
+                     
+                </form>
+                <div class="col-xs-offset-2 col-xs-10">
+                    <button class="btn btn-info btn-lg " onclick="calcRoute();"><i class="fas fa-map-signs"></i></button>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="googleMap">
+    
+                </div>
+                <div id="output">
+            </div> <!-- container-fluid -->
+            <div class="container-fluid">
+                <h1>convert map to png or pdf</h1>
+            </div>
+        </div> <!-- jumbotron -->
+
+
+
+        <!-- goole maps link AIzaSyDmdQDQZDUcCPKC5nFHU2Vg3fp6yj15a9M-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmdQDQZDUcCPKC5nFHU2Vg3fp6yj15a9M&libraries=places"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
